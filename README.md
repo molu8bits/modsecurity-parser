@@ -22,6 +22,14 @@ Functionality list:
    <img src="/images/top20ruleID.png" width="250" />
   <br>
 </p>
+
+# XLSX output example:
+<p align="left">
+   <img src="/images/xlsx_report_01.png" width="950" />
+</p>
+<p align="left">
+   <img src="/images/xlsx_report_02.png" width="950" />
+</p>
   
 # Installation
   Software needs at least Python 3.5.2 with additional libraries:
@@ -35,11 +43,15 @@ Functionality list:
   
 # Usage
 <h4>Simplest usage</h4>
+...
 python3 modsecurity-parser.py -f /home/user/logs/modsec_audit.log
+...
 for that case results will be recorded into subdirectory "modsec_output" where the log to analyse is placed.
 
 <h4>more options of usage available after:</h4>
+...
 python3 modsecurity-parser.py -h
+...
 <p>
 By default scripts reads only first 90000 of events.
 
