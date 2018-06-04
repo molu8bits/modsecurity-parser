@@ -1,7 +1,7 @@
 # modsecurity audit log parser and analyser
 
 # Description
-modsecurity parser is a python script to read <a href="https://www.modsecurity.org/">modsecurity.org</a> modsec_audit.log , tranform read events into more human and machine readable formats (xlsx/json) and make some graphical analysis:
+modsecurity parser is a python script to read <a href="https://www.modsecurity.org/">modsecurity.org</a> modsec_audit.log , tranform read events into more human and machine readable formats (xlsx/json) and make basic graph with analysis
 <p>
 Functionality list:
   <li>JSON output file with formatting conformed to JSON logging added into Modsecurity 2.9</li>
@@ -25,11 +25,11 @@ Functionality list:
 
 
 # xlsx format output example:
-<p align="left">
-   <img src="/images/xlsx_report_01.png" width="750" />
+<p align="center">
+   <img src="/images/xlsx_report_01.png" width="550" />
 </p>
-<p align="left">
-   <img src="/images/xlsx_report_02.png" width="750" />
+<p align="center">
+   <img src="/images/xlsx_report_02.png" width="550" />
 </p>
 
 
@@ -70,8 +70,8 @@ INCLUDE take precedense over EXLUDE. INCLUDE process only events with given IP s
 # LIMITATIONS:
 <li>The biggest tested modsec_audit.log was around 1GB size with around 70000 records. It took more or less 5 minutes on 8years old workstation and took temporarily around 2GB of RAM.</li>
 <li>modsec_audit.log were taken from Apache web servers with locale set to en-US - can except some errors if datatime is different. Adjust LOG_TIMESTAMP_FORMAT and LOG_TIMESTAMP_FORMAT_SHORT accordingly</li>
-<li>To test with modsec_audit.log having more than 90000 events just adjust MAXEVENTS</li>
-
+<li>To process more than 90000 events just adjust MAXEVENTS</li>
+<li>Tested with modsec_audit.log from version 2.8/2.9 only. Should work with newest 3.0 and older ones but to be confirmed</li>
 
 # TODO
 <li>put the software till 15 June 2018</li>
