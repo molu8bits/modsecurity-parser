@@ -17,12 +17,15 @@ Functionality list:
   <li>openpyxl 2.4.0</li>
 
 # Graph analysis examples
-<p align="right">
-   <img src="/images/timeline.png" width="250" />
-   <br>
-   <img src="/images/top10ipaddresses.png" width="150" />
-   <img src="/images/top10intercepted.PNG" width="150" />
-   <img src="/images/top20ruleID.PNG" width="150" />
+<p align="left">
+   <img src="/images/timeline.png" width="350" />
+</p>
+<br>
+<p align="center">
+
+   <img src="/images/top10ipaddresses.png" width="250" />
+   <img src="/images/top10intercepted.png" width="250" />
+   <img src="/images/top20ruleID.png" width="250" />
   <br>
 </p>
   
