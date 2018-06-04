@@ -4,7 +4,7 @@
 modsecurity parser is a python program to read <a href="https://www.modsecurity.org/">modsecurity.org</a> modsec_audit.log , tranform read events into more human and machine readable formats (xlsx/json) and make basic analysis presented as graphs. 
 
 <p>
-The first idea to create the tool was to get some helping tool to quickly get overview of security incidents recorded by modsecurity into big modsec_audit.log files.
+The first idea to create the tool was to enable quickly get overview of security incidents recorded by modsecurity module into huge modsec_audit.log files.
 </p>
 
 <p>
