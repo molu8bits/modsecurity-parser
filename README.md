@@ -26,10 +26,10 @@ Functionality list:
 
 # xlsx format output example:
 <p align="center">
-   <img src="/images/xlsx_report_01.png" width="550" />
+   <img src="/images/xlsx_report_01.png" width="750" />
 </p>
 <p align="center">
-   <img src="/images/xlsx_report_02.png" width="550" />
+   <img src="/images/xlsx_report_02.png" width="750" />
 </p>
 
 
@@ -61,7 +61,7 @@ python3 modsecurity-parser.py -h
 <p>
 By default scripts reads only first 90000 of events.
 
-Filters INCLUDE and EXCLUDE are available.
+Filters INCLUDE and EXCLUDE are available for IP source addresses.
 <p>
 INCLUDE ("--exclude 192.168.0.1 10.0.0.1") just skips events with given IP source address
 <p>
