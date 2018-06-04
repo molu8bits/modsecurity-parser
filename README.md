@@ -15,7 +15,20 @@ Functionality list:
   <li>matplotlib 2.1.2 </li>
   <li>numpy 1.13.1</li>
   <li>openpyxl 2.4.0</li>
+
+# Graph analysis examples
+<p align="right">
+   <img src="/images/timeline.png" width="250" />
+   <br>
+   <img src="/images/top10ipaddresses.png" width="150" />
+   <img src="/images/top10intercepted.PNG" width="150" />
+   <img src="/images/top20ruleID.PNG" width="150" />
+  <br>
+</p>
   
+   
+
+
   
 # Usage
 <h4>Simplest usage</h4>
