@@ -52,7 +52,7 @@ python3 modsecurity-parser.py -f /home/user/logs/modsec_audit.log
 
 for that case results will be recorded into subdirectory "modsec_output" where the log to analyse is placed.
 
-<h4>more options of usage available after:</h4>
+<h4>more options:</h4>
 
 ```
 python3 modsecurity-parser.py -h
@@ -66,6 +66,11 @@ Filters INCLUDE and EXCLUDE are available.
 INCLUDE ("--exclude 192.168.0.1 10.0.0.1") just skips events with given IP source address
 <p>
 INCLUDE take precedense over EXLUDE. INCLUDE process only events with given IP source address.
+
+# LIMITATIONS:
+<li>The biggest tested modsec_audit.log was around 1GB size with around 70000 records. It took more or less 5 minutes on 8years old workstation and took temporarily around 2GB of RAM.</li>
+<li>modsec_audit.log were taken from Apache web servers with locale set to en-US - can except some errors if datatime is different. Adjust LOG_TIMESTAMP_FORMAT and LOG_TIMESTAMP_FORMAT_SHORT accordingly</li>
+<li>To test with modsec_audit.log having more than 90000 events just adjust MAXEVENTS</li>
 
 
 # TODO
