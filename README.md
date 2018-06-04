@@ -23,14 +23,16 @@ Functionality list:
   <br>
 </p>
 
-# XLSX output example:
+
+# xlsx format output example:
 <p align="left">
-   <img src="/images/xlsx_report_01.png" width="950" />
+   <img src="/images/xlsx_report_01.png" width="750" />
 </p>
 <p align="left">
-   <img src="/images/xlsx_report_02.png" width="950" />
+   <img src="/images/xlsx_report_02.png" width="750" />
 </p>
-  
+
+
 # Installation
   Software needs at least Python 3.5.2 with additional libraries:
   <li>Pandas 0.22</li>
@@ -43,25 +45,31 @@ Functionality list:
   
 # Usage
 <h4>Simplest usage</h4>
-...
+
+```
 python3 modsecurity-parser.py -f /home/user/logs/modsec_audit.log
-...
+```
+
 for that case results will be recorded into subdirectory "modsec_output" where the log to analyse is placed.
 
 <h4>more options of usage available after:</h4>
-...
+
+```
 python3 modsecurity-parser.py -h
-...
+```
+
 <p>
 By default scripts reads only first 90000 of events.
 
 Filters INCLUDE and EXCLUDE are available.
 <p>
 INCLUDE ("--exclude 192.168.0.1 10.0.0.1") just skips events with given IP source address
+<p>
 INCLUDE take precedense over EXLUDE. INCLUDE process only events with given IP source address.
 
 
 # TODO
 <li>put the software till 15 June 2018</li>
 <li>add example of modsec_audit.log to test - till 15 June 2018 </li>
+<li>add sample report files - till 15 June 2018 </li>
 <li>create Wiki - till 30 July 2018 </li>
