@@ -8,17 +8,11 @@ Functionality list:
   <li>XLSX output file which can be analysed further with desktop tools</li>
   <li>PNG file with some basic analysis - Timeline nonblocked vs intercepted events, TOP10 IP source address, TOP20 Rule IDs hit, TOP10 Attacks intercepted</li>
 
-# Installation
-  Software needs at least Python 3.5.2 with additional libraries:
-  <li>Pandas 0.22</li>
-  <li>Pillow</li>
-  <li>matplotlib 2.1.2 </li>
-  <li>numpy 1.13.1</li>
-  <li>openpyxl 2.4.0</li>
+
 
 # Graph analysis examples
 <p align="left">
-   <img src="/images/timeline.png" width="350" />
+   <img src="/images/timeline.png" width="950" />
 </p>
 <br>
 <p align="center">
@@ -29,7 +23,13 @@ Functionality list:
   <br>
 </p>
   
-   
+# Installation
+  Software needs at least Python 3.5.2 with additional libraries:
+  <li>Pandas 0.22</li>
+  <li>Pillow</li>
+  <li>matplotlib 2.1.2 </li>
+  <li>numpy 1.13.1</li>
+  <li>openpyxl 2.4.0</li> 
 
 
   
