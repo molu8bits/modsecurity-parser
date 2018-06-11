@@ -41,7 +41,7 @@ Functionality list:
 
 
   
-# Usage
+# Basic usage
 <h4>Simplest usage</h4>
 
 ```
@@ -50,13 +50,16 @@ python3 modsecurity-parser.py -f /home/user/logs/modsec_audit.log
 
 for that case results will be recorded into subdirectory "modsec_output" where the log to analyse is placed.
 
-<h4>more options:</h4>
 
+# More options
+
+Get help:
+<p> 
 ```
 python3 modsecurity-parser.py -h
 ```
 
-# More options
+
 Filters INCLUDE and EXCLUDE are available for IP source addresses.
 <p>
 --exclude option ( e.g. "--exclude 192.168.0.1 10.0.0.1") just skips events with given IP source addresses
