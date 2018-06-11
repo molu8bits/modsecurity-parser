@@ -1,7 +1,7 @@
 # modsecurity audit log parser and analyser
 
 # TL;DR
-Get the overview  of security incidents reportyed by modsecurity module into huge modsec_audit.log files.
+Get the overview  of security incidents reported by modsecurity module into huge modsec_audit.log files.
 
 
 # Description
