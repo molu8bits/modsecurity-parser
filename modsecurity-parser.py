@@ -1,9 +1,11 @@
-# 2018.06 - molu8bits (at) gmail (dot) com
+# 2019.01 - molu8bits (at) gmail (dot) com
 # modsecurity-parser.py
 # Script to analyze modsecurity audit log and present outputs as:
 # - json file (compatible with default JSON logging)
 # - xlsx report
 # - png with graphs
+import matplotlib
+matplotlib.use('Agg')
 import os, argparse, re, json
 from collections import OrderedDict, Counter
 from time import localtime,strftime,strptime
@@ -47,11 +49,17 @@ argParser.add_argument('-e','--exclude', type=str, nargs='+', help='source IP ad
 argParser.add_argument('-i','--include', type=str, nargs='+', help='source IP addresses to include only into the results as a list (e.g. -include 1.2.3.4 5.5.5.5)', required=False)
 argParser.add_argument('-l', type=str, help='output file name for logging purposes', required=False)
 argParser.add_argument('--jsononeperline', action="store_true", help='events in output JSON will be enlisted one per line, otherwise by default JSON is humanreadable', default="False")
+argParser.add_argument('--version3', type=str, action="store_true", help='required to process modsecurity3 audit.log', default="False")
 passedArgs = vars(argParser.parse_args())
 
 inputFileName = passedArgs['f']
 jsonOutputFilename = passedArgs['j']
 JSON_ONE_PER_LINE = True if passedArgs['jsononeperline'] is True else False
+version3 = True if passedArgs['version3'] is True else False
+if version3:
+    a_pattern = re.compile('^---\w{8,10}---A--$')
+    z_pattern = re.compile('^---\w{8,10}---Z--$')
+
 xlsxOutputFilename = passedArgs['x']
 logOutputFilename = passedArgs['l']
 graphOutputFilename = passedArgs['g']
@@ -444,7 +452,7 @@ def modsecViewGraphs(modsecDict):
     graph_title = 'Modsecurity events ' + str(datetimenow) + ' from file: ' + inputFileName + ' first ' + str(MAXEVENTS) + ' analyzed'
     fig.canvas.set_window_title(graph_title)
     fig.set_size_inches(18,11)
-    plt.get_current_fig_manager().window.wm_geometry("+10+10")
+    #plt.get_current_fig_manager().window.wm_geometry("+10+10")
     try:
         if not os.path.isdir(fileBaseOutputDir):
             os.mkdir(fileBaseOutputDir)
@@ -464,7 +472,10 @@ def modsecLog2Info(singleEntry):
     """
     modsec_dict = OrderedDict()
     a_header = singleEntry[0]
-    e_separator = a_header[a_header.find('^--')+3:a_header.find('-A')]
+    if version3:
+        e_separator = a_header[a_header.find('^---') + 3:a_header.find('---A')]
+    else:
+        e_separator = a_header[a_header.find('^--')+3:a_header.find('-A')]
     itemNumber = 0
     itemKV = OrderedDict()
     for item in singleEntry:

@@ -1,18 +1,18 @@
-# modsecurity audit log parser and analyser
+# modsecurity audit log parser, analyser and chart maker
 
 # TL;DR
-Get the overview  of security incidents reported by modsecurity module into huge modsec_audit.log files.
+Get the overview of security incidents reported by modsecurity module from modsec_audit.log file.
 
 
 # Description
-modsecurity parser is a python program to read <a href="https://www.modsecurity.org/">modsecurity.org</a> modsec_audit.log , tranform read events into more human and machine readable formats (xlsx/json) and make basic analysis presented as graphs. 
+modsecurity parser is a python program to read <a href="https://www.modsecurity.org/">modsecurity.org</a> modsec_audit.log , tranform read events into more human and machine readable formats (xlsx/json) and make basic charts.
 
 
 <p>
 Functionality list:
   <li>JSON output file with formatting conformed to JSON logging added into Modsecurity 2.9</li>
   <li>XLSX output file which can be analysed further with desktop tools</li>
-  <li>PNG file with some basic analysis - Timeline nonblocked vs intercepted events, TOP10 IP source address, TOP20 Rule IDs hit, TOP10 Attacks intercepted</li>
+  <li>PNG file with some basic charts - Timeline nonblocked vs intercepted events, TOP10 IP source address, TOP20 Rule IDs hit, TOP10 Attacks intercepted</li>
 
 
 
@@ -42,7 +42,7 @@ Functionality list:
 
   
 # Basic usage
-<h4>Simplest usage</h4>
+<h4>Simple version</h4>
 
 ```
 python3 modsecurity-parser.py -f /home/user/logs/modsec_audit.log
@@ -73,7 +73,23 @@ Filters INCLUDE and EXCLUDE are available for IP source addresses.
 <li>The biggest tested modsec_audit.log was 1GB size with around 70000 records. It took more or less 5 minutes on 8years old workstation and memory usage temporarily raised to 2GB of RAM.</li>
 <li>modsec_audit.log were taken from Apache web servers with locale set to en-US. Software can except some errors if datatime format is different in the audited log. Adjust LOG_TIMESTAMP_FORMAT and LOG_TIMESTAMP_FORMAT_SHORT accordingly</li>
 <li>To process more than 90000 events just adjust MAXEVENTS</li>
-<li>Tested with modsec_audit.log from version 2.8/2.9 only. Should work with newest 3.0 and older ones but this to be confirmed</li>
+<li>Tested with modsec_audit.log from version 2.8/2.9 only. Added some code to work with 3.0 but has not been tested yet</li>
+
+# run via Docker
+Create a subfolder and put into some modsecurity audit logs (by default modsec_audit.log name is processed only)
+Run command
+
+```bash
+docker run --rm -ti -e HELP=Yes --mount type=bind,source="$(pwd)"/modseclogs,target=/opt/mounted molu8bits/modsecurity-parser:0.1
+```
+
+Get some more docker options:
+```bash
+docker run --rm -ti -e HELP=Yes molu8bits/modsecurity-parser:0.1
+```
+
+# Done
+Run via docker image added
 
 # TODO
-...
+Check if works with modsecurity3 audit logs
