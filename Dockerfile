@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 LABEL maintainer "molu8bits@gmail.com"
 LABEL description "modsecurity parse and charts via Docker"
-LABER version "2019.01 v0.1"
+LABEL version "2019.01 v0.1"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -14,6 +14,7 @@ RUN mkdir -p /opt/mparser/
 COPY modsecurity-parser.py /opt/mparser/
 COPY run.sh /opt/mparser/
 
+RUN chmod +x /opt/mparser/run.sh
 
 #ENTRYPOINT [ "skippedbynow" ]
 CMD [ "/opt/mparser/run.sh" ]

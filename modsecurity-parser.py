@@ -49,7 +49,7 @@ argParser.add_argument('-e','--exclude', type=str, nargs='+', help='source IP ad
 argParser.add_argument('-i','--include', type=str, nargs='+', help='source IP addresses to include only into the results as a list (e.g. -include 1.2.3.4 5.5.5.5)', required=False)
 argParser.add_argument('-l', type=str, help='output file name for logging purposes', required=False)
 argParser.add_argument('--jsononeperline', action="store_true", help='events in output JSON will be enlisted one per line, otherwise by default JSON is humanreadable', default="False")
-argParser.add_argument('--version3', type=str, action="store_true", help='required to process modsecurity3 audit.log', default="False")
+argParser.add_argument('--version3', action="store_true", help='required to process modsecurity3 audit.log', default="False")
 passedArgs = vars(argParser.parse_args())
 
 inputFileName = passedArgs['f']

@@ -42,7 +42,6 @@ Functionality list:
 
   
 # Basic usage
-<h4>Simple version</h4>
 
 ```
 python3 modsecurity-parser.py -f /home/user/logs/modsec_audit.log
@@ -53,8 +52,7 @@ for that case results will be recorded into subdirectory "modsec_output" where t
 
 # More options
 
-Get help:
-<p> 
+<p>
 
 ```
 python3 modsecurity-parser.py -h
@@ -76,11 +74,14 @@ Filters INCLUDE and EXCLUDE are available for IP source addresses.
 <li>Tested with modsec_audit.log from version 2.8/2.9 only. Added some code to work with 3.0 but has not been tested yet</li>
 
 # run via Docker
-Create a subfolder and put into some modsecurity audit logs (by default modsec_audit.log name is processed only)
+
+Create a subfolder (e.g. "modseclogs") and put into some modsecurity audit logs (by default modsec_audit.log name is processed only).
+Output files will be created inside of ${subfolder}/modsec_output
+
 Run command
 
 ```bash
-docker run --rm -ti -e HELP=Yes --mount type=bind,source="$(pwd)"/modseclogs,target=/opt/mounted molu8bits/modsecurity-parser:0.1
+docker run --rm -ti --mount type=bind,source="$(pwd)"/modseclogs,target=/opt/mounted molu8bits/modsecurity-parser:0.1
 ```
 
 Get some more docker options:
@@ -89,7 +90,7 @@ docker run --rm -ti -e HELP=Yes molu8bits/modsecurity-parser:0.1
 ```
 
 # Done
-Run via docker image added
+Running parser via docker image
 
 # TODO
 Check if works with modsecurity3 audit logs
