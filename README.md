@@ -3,6 +3,10 @@
 # TL;DR
 Get the overview of security incidents reported by modsecurity module from modsec_audit.log file.
 
+# 2019.04.17 update
+- added support for Modsecurity3 log (Nginx/Apache)
+- added feature to read Modsecurity log in JSON format
+
 
 # Description
 modsecurity parser is a python program to read <a href="https://www.modsecurity.org/">modsecurity.org</a> modsec_audit.log , tranform read events into more human and machine readable formats (xlsx/json) and make basic charts.
@@ -67,11 +71,23 @@ Filters INCLUDE and EXCLUDE are available for IP source addresses.
 <p>
 --jsononeperline  - option recommended for big number of events where e.g. produced JSON is supposed to be read by other SIEM tool. Uses the very same format as modsecurity software when type of logging is set to "JSON". 
 
+
+Processing Modsecurity3 log
+<p>
+--version3 (e.g. "modsecurity-parser.py -f modsec_audit.log --version3"
+<p>
+
+Processing Modsecurity log in JSON format:
+<p>
+--jsonaudit (e.g. "modsecurity-parser.py -f modsec_audit.log --jsonaudit"
+
+
+
 # Limitations:
 <li>The biggest tested modsec_audit.log was 1GB size with around 70000 records. It took more or less 5 minutes on 8years old workstation and memory usage temporarily raised to 2GB of RAM.</li>
 <li>modsec_audit.log were taken from Apache web servers with locale set to en-US. Software can except some errors if datatime format is different in the audited log. Adjust LOG_TIMESTAMP_FORMAT and LOG_TIMESTAMP_FORMAT_SHORT accordingly</li>
 <li>To process more than 90000 events just adjust MAXEVENTS</li>
-<li>Tested with modsec_audit.log from version 2.8/2.9 only. Added some code to work with 3.0 but has not been tested yet</li>
+<li>Tested with modsec_audit.log from version 2.8/2.9/3.0. Anyway Modsecurity3 for some cases produces empty sectionH and not all information is available to be properly presented in all graphs</li>
 
 # run via Docker
 
@@ -81,16 +97,14 @@ Output files will be created inside of ${subfolder}/modsec_output
 Run command
 
 ```bash
-docker run --rm -ti --mount type=bind,source="$(pwd)"/modseclogs,target=/opt/mounted molu8bits/modsecurity-parser:0.1
+docker run --rm -ti --mount type=bind,source="$(pwd)"/modseclogs,target=/opt/mounted molu8bits/modsecurity-parser:0.2
 ```
 
 Get some more docker options:
 ```bash
-docker run --rm -ti -e HELP=Yes molu8bits/modsecurity-parser:0.1
+docker run --rm -ti -e HELP=Yes molu8bits/modsecurity-parser:0.2
 ```
 
-# Done
-Running parser via docker image
+TODO
+Update Docker image to version 0.2
 
-# TODO
-Check if works with modsecurity3 audit logs

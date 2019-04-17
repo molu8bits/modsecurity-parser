@@ -36,8 +36,13 @@ modsec_message_id_pattern = r'(?<=\[id\s\").*?(?=\"\])'
 modsec_message_severity_pattern = r'(?<=\[severity\s\").*?(?=\"\])'
 modsec_message_maturity_pattern = r'(?<=\[maturity\s\").*?(?=\"\])'
 modsec_message_accuracy_pattern = r'(?<=\[accuracy\s\").*?(?=\"\])'
-modsec_message_message_pattern = r'(?<=\Message:).*?(?=\[)'
-
+modsec_message_message_pattern = r'(?<=Message:).*?(?=\.\ \[)'
+modsec_v3_message_phase_pattern = r'(?<=\(phase).*?(?=\))'
+#modsec_v3_message_phase_pattern = r'(?:\(phase).*?(?:\))'           # (phase 2)
+#modsec_v3_message_phase_pattern = r'(?:\(phase).*?(?=\))'
+#modsec_v3_message_message_pattern = r'(?<=\Message:).*?(?=\[)'
+modsec_v3_message_message_pattern = r'(?<=\Matched).*?(?=\[)'
+modsec_v3_message_msg_pattern = r'(?<=\[msg\s\").*?(?=\"\])'
 
 # parse the command line arguments
 argParser = argparse.ArgumentParser()
@@ -49,16 +54,25 @@ argParser.add_argument('-e','--exclude', type=str, nargs='+', help='source IP ad
 argParser.add_argument('-i','--include', type=str, nargs='+', help='source IP addresses to include only into the results as a list (e.g. -include 1.2.3.4 5.5.5.5)', required=False)
 argParser.add_argument('-l', type=str, help='output file name for logging purposes', required=False)
 argParser.add_argument('--jsononeperline', action="store_true", help='events in output JSON will be enlisted one per line, otherwise by default JSON is humanreadable', default="False")
-argParser.add_argument('--version3', action="store_true", help='required to process modsecurity3 audit.log', default="False")
+argParser.add_argument('--version3', action="store_true", help='required if modsec_audit.log is produced by ModSecurity3', default="False")
+argParser.add_argument('--jsonaudit', action='store_true', help='required if modsec_audit.log is JSON')
 passedArgs = vars(argParser.parse_args())
 
 inputFileName = passedArgs['f']
 jsonOutputFilename = passedArgs['j']
 JSON_ONE_PER_LINE = True if passedArgs['jsononeperline'] is True else False
 version3 = True if passedArgs['version3'] is True else False
+jsonaudit = True if passedArgs['jsonaudit'] is True else False
+
+# Modsecurity JSON output for message doesn't comprise 'Message:' at the beggining of the string.
+if jsonaudit:
+    modsec_message_message_pattern = r'(?<=^).*(?=\.\s\[)'
+
+# Modsecurity3 message information (if exists) starts with 'ModSecurity' string.
 if version3:
     a_pattern = re.compile('^---\w{8,10}---A--$')
     z_pattern = re.compile('^---\w{8,10}---Z--$')
+    modsec_message_message_pattern = r'(?<=\ModSecurity:).*?(?=\[)'
 
 xlsxOutputFilename = passedArgs['x']
 logOutputFilename = passedArgs['l']
@@ -198,7 +212,7 @@ def modsecSaveXLSX(modsecDict, outputXLSXFileName, outputWithGraphs):
             audit_data_action_message = safedictkey(entry_mod, ['audit_data','action','message'], '-')
             audit_data_action_phase = safedictkey(entry_mod, ['audit_data','action','phase'], '-')
 
-            if 'messages' in entry_mod['audit_data']:
+            if ('messages' in entry_mod['audit_data']) and (len(entry_mod['audit_data']) > 0):
                 if len(entry_mod['audit_data']['messages']) > 1:
                     audit_data_message_type = 'multiple'
                 else:
@@ -221,6 +235,8 @@ def modsecSaveXLSX(modsecDict, outputXLSXFileName, outputWithGraphs):
                                 each
                                 ])
             else:
+                audit_data_message_type = 'None'
+                each = 'None'
                 #print('M error - message not found for transaction_id :', transaction_id)
                 audit_data_message_message = audit_data_message_file = audit_data_message_id = audit_data_message_msg = \
                 audit_data_message_severity = audit_data_message_maturity = audit_data_message_accuracy = '-'
@@ -271,16 +287,28 @@ def modsecViewGraphs(modsecDict):
         try:
             ''' Graph data for "TOP 10 IP source addresses" '''
             src_ip_tab.append(entry_mod['transaction']['remote_address'])
+
             ''' Graph data for "Modsecurity Events reported vs intercepted" '''
-            if 'action' in entry_mod['audit_data'].keys() and 'intercepted' in entry_mod['audit_data']['action'].keys():
-                event_time_action.append([entry_mod['transaction']['time'],True])
+            if (version3 is False) and ('action' in entry_mod['audit_data'].keys() and 'intercepted' in entry_mod['audit_data']['action'].keys()):
+                event_time_action.append([entry_mod['transaction']['time'], True])
+
+            elif (version3 is True) and len(entry_mod['audit_data']) > 0:
+                for each_msg in entry_mod['audit_data']['messages']:
+                    #print('each_msg :', each_msg)
+                    if each_msg.startswith("ModSecurity: Access denied"):
+                        event_time_action.append([entry_mod['transaction']['time'], True])
+                    else:
+                        event_time_action.append([entry_mod['transaction']['time'], False])
+                        #print('Nobody expect the Spanish Inquisition for ModSecurity v3')
+                        #print('each_msg :', each_msg)
             else:
                 # No 'intercepted'
                 event_time_action.append([entry_mod['transaction']['time'], False])
         except Exception as e2:
             print('Exception in Graph TOP 10 IP source addresses', e2)
+
+        ''' Graph data for "TOP 20 rule hits"'''
         try:
-            ''' Graph data for "TOP 20 rule hits"'''
             if 'messages' in entry_mod['audit_data'].keys():
                 messages = safedictkey(entry_mod, ['audit_data','messages'], '-')
                 for each in messages:
@@ -303,19 +331,29 @@ def modsecViewGraphs(modsecDict):
                 ''' Skip modsec_audit entries without [message] part'''
                 pass
         except Exception as e3:
-            print('Exception w TOP 20 rule hits', e3)
+            print('Exception in TOP 20 rule hits', e3)
             print('for transaction_id :', safedictkey(entry_mod, ['transaction','transaction_id'], '-'))
+
+        ''' Graph data for "TOP 10 Attacks intercepted" '''
         try:
-            ''' Graph data for "TOP 10 Attacks intercepted" '''
-            if 'action' in entry_mod['audit_data']:
+            if (version3 is False) and ('action' in entry_mod['audit_data']):
                 msg = entry_mod['audit_data']['action']['message']
                 if len(msg) > 60:
                     msg = msg[:50] + '...'
                 intercepted_reason.append([entry_mod['audit_data']['action']['phase'], msg, 'phase ' + str(entry_mod['audit_data']['action']['phase']) + ': ' + msg])
+            elif (version3 is True) and len(entry_mod['audit_data']) > 0:
+                for each_msg in entry_mod['audit_data']['messages']:
+                    if each_msg.startswith("ModSecurity: Access denied"):
+                        msg = regular_expression_evaluate(each_msg, modsec_v3_message_msg_pattern)
+                        if len(msg) > 60:
+                            msg = msg[:50] + '...'
+                        phase = regular_expression_evaluate(each_msg, modsec_v3_message_phase_pattern)
+                        intercepted_reason.append([phase, msg, 'phase ' + phase + ': ' + msg])
+
         except Exception as e:
             print('Exception in Graph TOP 10 Attacks intercepted', e)
     """
-    Modsecurity events nonblocked vs intercepted
+    Modsecurity events Passed vs Intercepted
     """
     np_event_time_action = np.array(event_time_action)
     event_times1 = np_event_time_action[:, 0]
@@ -332,13 +370,13 @@ def modsecViewGraphs(modsecDict):
         'date': pd.to_datetime(event_times),
         'action': event_action
     })
-    intercepted = [] ; nonblocked = []; nonblocked_cnt2 = 0; intercepted_cnt2 = 0
+    intercepted = [] ; passed = []; passed_cnt2 = 0; intercepted_cnt2 = 0
     for row in events_df['action']:
         if (row == 'True'):
-            intercepted.append(1); nonblocked.append(0); intercepted_cnt2 += 1
+            intercepted.append(1); passed.append(0); intercepted_cnt2 += 1
         else:
-            intercepted.append(0); nonblocked.append(1); nonblocked_cnt2 += 1
-    events_df['intercepted'] = intercepted; events_df['nonblocked'] = nonblocked
+            intercepted.append(0); passed.append(1); passed_cnt2 += 1
+    events_df['intercepted'] = intercepted; events_df['passed'] = passed
     '''
     GRAPHS PART II
     '''
@@ -384,7 +422,7 @@ def modsecViewGraphs(modsecDict):
     title_timespan = 'Analysis of ' + str(records_processed_cnt) + ' modsecurity events in timespan: ' + \
                    str(event_times_min.strftime("%Y-%m-%d_%H:%M")) + ' - ' + str(event_times_max.strftime("%Y-%m-%d_%H:%M")) + '\n'
     title_total = 'Total number of events found in logfile ' + str(records_total) + ' (output always trimmed to variable MAXEVENTS = ' + str(MAXEVENTS) + ' )\n'
-    title_reported_intercepted = 'events nonblocked: ' + str(nonblocked_cnt2) + ' , events intercepted: ' + str(intercepted_cnt2)
+    title_reported_intercepted = 'events passed: ' + str(passed_cnt2) + ' , events intercepted: ' + str(intercepted_cnt2)
     plot_title = title_timespan + title_total + modsec_inc_exc_str + '\n\n' + title_reported_intercepted
     if event_times_range_seconds < 1800:
         short_time_range_message = 'Creating timeline graph is not available for timespan ' + str(event_times_range_seconds) + ' seconds, skipping ...'
@@ -473,83 +511,91 @@ def modsecLog2Info(singleEntry):
     modsec_dict = OrderedDict()
     a_header = singleEntry[0]
     if version3:
-        e_separator = a_header[a_header.find('^---') + 3:a_header.find('---A')]
+        e_separator = a_header[a_header.find('^---')+ 4:a_header.find('---A--')]
     else:
-        e_separator = a_header[a_header.find('^--')+3:a_header.find('-A')]
+        e_separator = a_header[a_header.find('^--')+3:a_header.find('-A-')]
     itemNumber = 0
     itemKV = OrderedDict()
-    for item in singleEntry:
-        if item.__contains__(e_separator):
-            itemKV[item.rstrip()[-3:-2:]] = itemNumber
-        itemNumber+=1
-    item_keys = list(itemKV.keys())
-    itemKVFull = OrderedDict()
-    for item_letter in item_keys:
-        if item_letter in modsec_event_types:
-            i = int(itemKV[item_letter]) + 1
-            j = itemKV[item_keys[item_keys.index(item_letter) + 1 ] ]
-            itemKVFull[item_letter] = singleEntry[i:j]
+    try:
+        for item in singleEntry:
+            if item.__contains__(e_separator):
+                itemKV[item.rstrip()[-3:-2:]] = itemNumber
+            itemNumber+=1
+        item_keys = list(itemKV.keys())
+        itemKVFull = OrderedDict()
+        for item_letter in item_keys:
+            if item_letter in modsec_event_types:
+                i = int(itemKV[item_letter]) + 1
+                j = itemKV[item_keys[item_keys.index(item_letter) + 1 ] ]
+                itemKVFull[item_letter] = singleEntry[i:j]
 
-    modsec_a = itemKVFull['A'][0]
-    modsec_b = itemKVFull['B']
-    modsec_f = itemKVFull['F']
-    modsec_h = itemKVFull['H']
+        modsec_a = itemKVFull['A'][0]
+        modsec_b = itemKVFull['B']
+        modsec_f = itemKVFull['F']
+        modsec_h = itemKVFull['H']
 
-    modsec_b_headers = dict(map(lambda s: [s[0:s.find(': ')],s[s.find(': ')+2:]], modsec_b[1:-1]))
-    modsec_f_headers = dict(map(lambda s: [s, '-'] if len(s.split(': ')) == 1 else s.split(': '), modsec_f[1:-1]))
-    modsec_h_dict = OrderedDict()
-    for elem in modsec_h:
-        if elem.startswith('Message:'):
-            if 'messages' not in modsec_h_dict:
-                modsec_h_dict['messages'] = [elem]
-            else:
-                modsec_h_dict['messages'].append(elem)
-        elif elem.startswith('Apache-Handler:'):
-            if 'handlers_messages' not in modsec_h_dict:
-                modsec_h_dict['handlers_messages'] = [elem]
-            else:
-                modsec_h_dict['handlers_messages'].append(elem)
-        elif elem.startswith('Apache-Error:'):
-            if 'error_messages' not in modsec_h_dict:
-                modsec_h_dict['error_messages'] = [elem]
-            else:
-                modsec_h_dict['error_messages'].append(elem)
-        elif elem.startswith('Producer:'):
-            modsec_h_dict['producer'] = elem.split(': ')[1].strip(' .').split('; ')
-        elif elem.startswith('Engine-Mode:'):
-            modsec_h_dict['Engine-Mode'] = elem.split(': ')[1].strip('"')
-        elif elem.startswith('Server:'):
-            modsec_h_dict['server'] = elem.split(': ')[1]
-        elif elem.startswith('Action: '):
-            modsec_h_dict['action'] = {}
-            if 'ntercepted' in elem:
-                modsec_h_dict['action']['intercepted'] = True
-                modsec_h_dict['action']['phase'] = int(elem[elem.find('phase')+6])
-                modsec_h_dict['action']['message'] = modsec_h_dict['messages'][-1].split('.')[1].strip()
-        elif elem.startswith('Stopwatch2'):
-            modsec_h_dict['stopwatch'] = {}
-            for stopw in elem.split(' '):
-                if '=' in stopw:
-                    modsec_h_dict['stopwatch'][stopw.split('=')[0]] = int(stopw.split('=')[1].strip(','))
+        modsec_b_headers = dict(map(lambda s: [s[0:s.find(': ')],s[s.find(': ')+2:]], modsec_b[1:-1]))
+        modsec_f_headers = dict(map(lambda s: [s, '-'] if len(s.split(': ')) == 1 else [s[0:s.find(': ')], s[s.find(': ') + 2:]], modsec_f[1:-1]))
 
-            #modsec_h_dict['action'] = elem.split(': ')[1:]
-        else:
-            pass
-    modsec_a_split = modsec_a.split()
-    modsec_dict['transaction'] = {'time' : modsec_a_split[0].replace('[','') + ' ' + modsec_a_split[1].replace(']',''), 'transaction_id': modsec_a_split[2], 'remote_address' : modsec_a_split[3],
+        modsec_h_dict = OrderedDict()
+        for elem in modsec_h:
+            if elem.startswith('Message:') or elem.startswith('ModSecurity:'):
+                if 'messages' not in modsec_h_dict:
+                    modsec_h_dict['messages'] = [elem]
+                else:
+                    modsec_h_dict['messages'].append(elem)
+            elif elem.startswith('Apache-Handler:'):
+                if 'handlers_messages' not in modsec_h_dict:
+                    modsec_h_dict['handlers_messages'] = [elem]
+                else:
+                    modsec_h_dict['handlers_messages'].append(elem)
+            elif elem.startswith('Apache-Error:'):
+                if 'error_messages' not in modsec_h_dict:
+                    modsec_h_dict['error_messages'] = [elem]
+                else:
+                    modsec_h_dict['error_messages'].append(elem)
+            elif elem.startswith('Producer:'):
+                modsec_h_dict['producer'] = elem.split(': ')[1].strip(' .').split('; ')
+            elif elem.startswith('Engine-Mode:'):
+                modsec_h_dict['Engine-Mode'] = elem.split(': ')[1].strip('"')
+            elif elem.startswith('Server:'):
+                modsec_h_dict['server'] = elem.split(': ')[1]
+            elif elem.startswith('Action: '):
+                modsec_h_dict['action'] = {}
+                if 'ntercepted' in elem:
+                    modsec_h_dict['action']['intercepted'] = True
+                    modsec_h_dict['action']['phase'] = int(elem[elem.find('phase')+6])
+                    modsec_h_dict['action']['message'] = modsec_h_dict['messages'][-1].split('.')[1].strip()
+            elif elem.startswith('Stopwatch2'):
+                modsec_h_dict['stopwatch'] = {}
+                for stopw in elem.split(' '):
+                    if '=' in stopw:
+                        modsec_h_dict['stopwatch'][stopw.split('=')[0]] = int(stopw.split('=')[1].strip(','))
+
+            else:
+                pass
+        modsec_a_split = modsec_a.split()
+        modsec_dict['transaction'] = {'time' : modsec_a_split[0].replace('[','') + ' ' + modsec_a_split[1].replace(']',''), 'transaction_id': modsec_a_split[2], 'remote_address' : modsec_a_split[3],
                                   'remote_port': modsec_a_split[4], 'local_address': modsec_a_split[5], 'local_port': modsec_a_split[6] }
-    modsec_dict['request'] = {'request_line': modsec_b[0], 'headers': modsec_b_headers}
-    if len(modsec_f_headers) > 3:
-        modsec_dict['response'] = OrderedDict()
-        try:
-            modsec_dict['response'] = {'protocol': modsec_f[0].split(' ')[0], 'status': modsec_f[0].split(' ')[1], 'status_text': ' '.join(modsec_f[0].split(' ')[2:]), 'headers': modsec_f_headers}
-        except Exception as e:
-            print('Exception at modsec_dict["response"] :', e)
+        if len(modsec_b) > 0:
+            modsec_dict['request'] = {'request_line': modsec_b[0], 'headers': modsec_b_headers}
+        else:
+            modsec_dict['request'] = 'None'
+
+        if len(modsec_f_headers) > 3:
+            modsec_dict['response'] = OrderedDict()
+            try:
+                modsec_dict['response'] = {'protocol': modsec_f[0].split(' ')[0], 'status': modsec_f[0].split(' ')[1], 'status_text': ' '.join(modsec_f[0].split(' ')[2:]), 'headers': modsec_f_headers}
+            except Exception as e:
+                print('Exception at modsec_dict["response"] :', e)
+                modsec_dict['response'] = 'None'
+        else:
             modsec_dict['response'] = 'None'
-    else:
-        modsec_dict['response'] = 'None'
-    modsec_dict['audit_data'] = OrderedDict()
-    modsec_dict['audit_data'] = modsec_h_dict
+        modsec_dict['audit_data'] = OrderedDict()
+        modsec_dict['audit_data'] = modsec_h_dict
+    except Exception as e:
+        print('modsecLog2Info() error found :', e, ' when processing :', singleEntry)
+        modsec_dict = 'ERROR'
 
     return modsec_dict
 
@@ -575,8 +621,26 @@ def processModsecAudit(inputFileName):
         print('Error found during read file ', inputFileName)
         return 'error'
 
+def processModsecAudit3(inputFileName):
+    try:
+        with open(inputFileName, 'r') as modsecFHandler:
+            modsec_Table = []
+            for logLine in modsecFHandler:
+                p = json.loads(logLine)
+                modsec_Table.append(p)
+        return modsec_Table
+    except FileNotFoundError:
+        print('File "', inputFileName, '" not found')
+        return 'error'
+    except Exception as e:
+        print('Error found during read file ', inputFileName)
+        return 'error'
+
 if __name__ == "__main__":
-    modsec_Table = processModsecAudit(inputFileName)
+    if jsonaudit is True:
+        modsec_Table = processModsecAudit3(inputFileName)
+    else:
+        modsec_Table = processModsecAudit(inputFileName)
     if isinstance(modsec_Table, str) and modsec_Table in 'error':
         print('No modsecurity audit log found')
     elif isinstance(modsec_Table, list) and len(modsec_Table) == 0:
@@ -585,7 +649,10 @@ if __name__ == "__main__":
         records_total = len(modsec_Table)
         modsec_entries = []
         for modsec_entry in modsec_Table:
-            json_modsec_entry = modsecLog2Info(modsec_entry)
+            if jsonaudit is False:
+                json_modsec_entry = modsecLog2Info(modsec_entry)
+            else:
+                json_modsec_entry = modsec_entry
             if FILTER_INCLUDE:
                 if dict(json_modsec_entry)['transaction']['remote_address'] in filter_include_table:
                     modsec_entries.append(json_modsec_entry)
@@ -598,6 +665,8 @@ if __name__ == "__main__":
                     records_processed_cnt +=1
                 else:
                     records_skipped_cnt +=1
+            elif (isinstance(json_modsec_entry, str)) and ('ERROR' in json_modsec_entry):
+                records_skipped_cnt += 1
             else:
                 modsec_entries.append(json_modsec_entry)
                 records_processed_cnt +=1
@@ -606,7 +675,7 @@ if __name__ == "__main__":
                 print('-' * 10, 'The rest of ', str(records_total - MAXEVENTS - records_skipped_cnt), ' events will be skipped ...', '-' * 10)
                 break
         print('-' * 10, 'modsec_audit events processed: %s   ' % records_processed_cnt, '-' * 10)
-        print('-' * 10, 'modsec_audit events skipped by INCLUDED/EXCLUDED options :', records_skipped_cnt, '-' * 10)
+        print('-' * 10, 'modsec_audit events skipped by INCLUDED/EXCLUDED options or INVALID :', records_skipped_cnt, '-' * 10)
         if len(modsec_entries) < 1:
             print('ERROR : modsec_audit entries to analyze not found with used filters')
         else:

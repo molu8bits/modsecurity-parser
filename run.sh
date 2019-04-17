@@ -15,6 +15,7 @@ if [[ ! -z "$INCLUDE" ]]; then PARAMS=${PARAMS}" -i $INCLUDE"; fi;
 if [[ ! -z "$L" ]]; then PARAMS=${PARAMS}" -l $L"; fi;
 if [[ ! -z "$JSONONEPERLINE" ]]; then PARAMS=${PARAMS}" --jsononeperline"; fi;
 if [[ ! -z "$VERSION3" ]]; then PARAMS=${PARAMS}" --version3"; fi;
+if [[ ! -z "$JSONAUDIT" ]]; then PARAMS=${PARAMS}" --jsonaudit"; fi;
 
 if [[ ! -z "$HELP" ]]; then
    echo "Help menu - docker additional parameters to pass"
@@ -27,6 +28,7 @@ if [[ ! -z "$HELP" ]]; then
    echo "  L={filename} - Log from operation filename"
    echo "  JSONONEPERLINE=Yes - json output log format"
    echo "  VERSION3=Yes         - to parse Modsecurity3 audit logs"
+   echo "  JSONAUDIT=Yes        - to parse JSON type of Modsecurity2/3 logs"
 else
    /usr/bin/python3 /opt/mparser/modsecurity-parser.py $PARAMS
 fi
