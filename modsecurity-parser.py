@@ -622,18 +622,24 @@ def processModsecAudit(inputFileName):
         return 'error'
 
 def processModsecAudit3(inputFileName):
+    lineNumber = 0
+    modsec_Table = []
     try:
-        with open(inputFileName, 'r') as modsecFHandler:
-            modsec_Table = []
+        with open(inputFileName, 'r', encoding='utf-8', errors='ignore') as modsecFHandler:
             for logLine in modsecFHandler:
-                p = json.loads(logLine)
-                modsec_Table.append(p)
+                lineNumber += 1
+                try:
+                    p = json.loads(logLine)
+                    modsec_Table.append(p)
+                except Exception as e_logline:
+                    print('Error {0} found during reading file {1} at line {2}'.format(e_logline, inputFileName, lineNumber))
         return modsec_Table
     except FileNotFoundError:
         print('File "', inputFileName, '" not found')
         return 'error'
     except Exception as e:
-        print('Error found during read file ', inputFileName)
+        #print('Error found during read file ', inputFileName)
+        print('Error {0} found during read file {1} at line {2}'.format(e, inputFileName, lineNumber))
         return 'error'
 
 if __name__ == "__main__":
