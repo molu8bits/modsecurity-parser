@@ -451,7 +451,7 @@ def modsecViewGraphs(modsecDict):
 
     ''' Bar chart "TOP 10 Attacks intercepted" '''
     plt.subplot(ax31)
-    patches, texts, autotexts = plt.pie(intercepted_cnt_top10.values(), autopct='%1.1f%%', shadow=True, startangle=90, radius=1.0)
+    patches, texts, autotexts = plt.pie(intercepted_cnt_top10.values(), autopct='%1.1f%%', shadow=True, startangle=90, radius=1.0, normalize=False)
     [_.set_fontsize(7) for _ in texts]
     plt.title('TOP 10 Attacks intercepted', bbox={'facecolor': '0.8', 'pad': 5})
 
