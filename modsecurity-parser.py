@@ -357,7 +357,7 @@ def modsecViewGraphs(modsecDict):
     """
     np_event_time_action = np.array(event_time_action)
     event_times1 = np_event_time_action[:, 0]
-    event_times = list(map(lambda x: datetime.strptime(x, LOG_TIMESTAMP_FORMAT).replace(tzinfo=None), event_times1))
+    event_times = list(map(lambda x: datetime.strptime(x.replace('--','-'), LOG_TIMESTAMP_FORMAT).replace(tzinfo=None), event_times1))
     event_action = np_event_time_action[:, 1]
     event_times_min = min(event_times); event_times_max = max(event_times); event_times_range = event_times_max - event_times_min
     event_times_range_seconds = int(event_times_range.total_seconds())
@@ -451,7 +451,7 @@ def modsecViewGraphs(modsecDict):
 
     ''' Bar chart "TOP 10 Attacks intercepted" '''
     plt.subplot(ax31)
-    patches, texts, autotexts = plt.pie(intercepted_cnt_top10.values(), autopct='%1.1f%%', shadow=True, startangle=90, radius=1.0, normalize=False)
+    patches, texts, autotexts = plt.pie(intercepted_cnt_top10.values(), autopct='%1.1f%%', shadow=True, startangle=90, radius=1.0, normalize=True)
     [_.set_fontsize(7) for _ in texts]
     plt.title('TOP 10 Attacks intercepted', bbox={'facecolor': '0.8', 'pad': 5})
 
@@ -471,7 +471,7 @@ def modsecViewGraphs(modsecDict):
 
     ''' Bar chart "TOP 20 Rule IDs hit" '''
     plt.subplot(ax41)
-    patches, texts, autotexts = plt.pie(event_messages_ids_top20.values(), autopct='%1.1f%%', shadow=True, startangle=90, radius=1.0)
+    patches, texts, autotexts = plt.pie(event_messages_ids_top20.values(), autopct='%1.1f%%', shadow=True, startangle=90, radius=1.0, normalize=True)
     plt.title('TOP 20 Rule IDs hit', bbox={'facecolor': '0.8', 'pad': 5})
 
     ''' Legend for chart "TOP 20 Rule IDs hit" '''

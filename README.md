@@ -3,6 +3,12 @@
 # TL;DR
 Get the overview of security incidents reported by modsecurity module from modsec_audit.log file.
 
+# 2020.09.20 update
+- added support for logs from timezone "UTC-..."
+- updated plotting to matplotlib.3.1
+- added dockerhub autobuild
+- added requirements.txt
+
 # 2019.04.17 update
 - added support for Modsecurity3 log (Nginx/Apache)
 - added feature to read Modsecurity log in JSON format
@@ -41,8 +47,13 @@ Functionality list:
   <li>Pillow</li>
   <li>matplotlib 2.1.2 </li>
   <li>numpy 1.13.1</li>
-  <li>openpyxl 2.4.0</li> 
+  <li>openpyxl 2.4.0</li>
+  
+Install them with command
 
+```
+pip3 install -r requirements.txt
+```
 
   
 # Basic usage
@@ -97,14 +108,12 @@ Output files will be created inside of ${subfolder}/modsec_output
 Run command
 
 ```bash
-docker run --rm -ti --mount type=bind,source="$(pwd)"/modseclogs,target=/opt/mounted molu8bits/modsecurity-parser:0.2
+docker run --rm -ti --mount type=bind,source="$(pwd)"/modseclogs,target=/opt/mounted molu8bits/modsecurity-parser:latest
 ```
 
 Get some more docker options:
 ```bash
-docker run --rm -ti -e HELP=Yes molu8bits/modsecurity-parser:0.2
+docker run --rm -ti -e HELP=Yes molu8bits/modsecurity-parser:latest
 ```
 
-TODO
-Update Docker image to version 0.2
 
