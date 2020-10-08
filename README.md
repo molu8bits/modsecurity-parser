@@ -1,5 +1,12 @@
 # modsecurity audit log parser, analyser and chart maker
 
+
+![Docker Build Status](https://img.shields.io/docker/automated/molu8bits/modsecurity-parser.svg)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/molu8bits/modsecurity-parser.svg)
+![Docker Image Size](https://img.shields.io/docker/image-size/molu8bits/modsecurity-parser.svg?sort=date)
+![Docker Image Version (latest by date):](https://img.shields.io/docker/v/molu8bits/modsecurity-parser.svg?sort=date)
+![Docker Pulls](https://img.shields.io/docker/pulls/molu8bits/modsecurity-parser.svg)
+
 # TL;DR
 Get the overview of security incidents reported by modsecurity module from modsec_audit.log file.
 
