@@ -1,5 +1,5 @@
-numpy
-matplotlib
-pillow
-pandas
-openpyxl
+numpy==1.19.2
+matplotlib==3.3.2
+pillow==7.2.0
+pandas==1.1.3
+openpyxl==2.4.0
