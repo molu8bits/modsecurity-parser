@@ -1,0 +1,12 @@
+# Linting/Tooling
+pylint
+flake8
+mypy
+isort
+black
+pre-commit
+autopep8
+bandit
+pytest
+pytest-cov
+codecov

@@ -1,7 +1,8 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
+
 LABEL maintainer "molu8bits@gmail.com"
 LABEL description "modsecurity parse and charts via Docker"
-LABEL version "2020.09 v0.3"
+LABEL version "2023.03 v0.4"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -15,7 +16,7 @@ RUN apt-get update && apt-get install -y git && \
 
 RUN pip3 install -r /opt/mparser/requirements.txt
 
-COPY modsecurity-parser.py /opt/mparser/
+COPY modsecurity_parser.py /opt/mparser/
 COPY run.sh /opt/mparser/
 
 RUN chmod +x /opt/mparser/run.sh
