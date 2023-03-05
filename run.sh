@@ -30,6 +30,5 @@ if [[ ! -z "$HELP" ]]; then
    echo "  VERSION3=Yes         - to parse Modsecurity3 audit logs"
    echo "  JSONAUDIT=Yes        - to parse JSON type of Modsecurity2/3 logs"
 else
-   /usr/bin/python3 /opt/mparser/modsecurity-parser.py $PARAMS
+   /usr/bin/python3 /opt/mparser/modsecurity_parser.py $PARAMS
 fi
-
