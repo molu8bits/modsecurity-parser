@@ -558,7 +558,7 @@ def modsec_view_graphs(modsec_dict):  # noqa: C901
         plt.text(0.5, 0.5, short_time_range_message, horizontalalignment='center', verticalalignment='center')
         plt.title(plot_title)
     else:
-        ex = events_df.groupby(pd.Grouper(key='date', freq=periods)).sum()
+        ex = events_df.groupby(pd.Grouper(key='date', freq=periods)).sum(numeric_only=True)
         ex.plot(ax=ax1, kind='bar', title=plot_title, stacked=True, color={'purple', 'red'}, fontsize=7, rot=45)
 
     # Bar chart "TOP 10 IP addresses"
@@ -615,7 +615,7 @@ def modsec_view_graphs(modsec_dict):  # noqa: C901
     # x_value = np.char.array(list(event_messages_ids_top20.keys()))
     y_value = np.array(list(event_messages_ids_top20.values()))
     labels = [
-        'f{i} --> {j} hits' for i, j in zip(event_messages_ids_top20.keys(),
+        f'{i} --> {j} hits' for i, j in zip(event_messages_ids_top20.keys(),
                                             event_messages_ids_top20.values())]
     if len(event_messages_ids_top20.keys()) >= 1:
         patches, labels, dummy = zip(*sorted(zip(patches, labels, y_value),

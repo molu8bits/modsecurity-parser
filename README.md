@@ -1,16 +1,24 @@
 # modsecurity audit log parser, analyser and chart maker
 
-![Docker Build Status](https://img.shields.io/docker/automated/molu8bits/modsecurity-parser.svg)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/molu8bits/modsecurity-parser.svg)
+![CI](https://github.com/molu8bits/modsecurity-parser/workflows/CI/badge.svg?branch=develop&event=push)
+[![codecov](https://codecov.io/gh/molu8bits/modsecurity-parser/branch/master/graph/badge.svg?token=BY0D5SNBR8)](https://codecov.io/gh/molu8bits/modsecurity-parser)
 ![Docker Image Size](https://img.shields.io/docker/image-size/molu8bits/modsecurity-parser.svg?sort=date)
 ![Docker Image Version (latest by date):](https://img.shields.io/docker/v/molu8bits/modsecurity-parser.svg?sort=date)
 ![Docker Pulls](https://img.shields.io/docker/pulls/molu8bits/modsecurity-parser.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=modsecurity-parser&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=modsecurity-parser)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=modsecurity-parser&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=modsecurity-parser)
 
 ## TL;DR
 
 Get the overview of security incidents reported by modsecurity module from modsec_audit.log file.
 
-## 2022.01.01 update
+## 2023.05.03 update
+
+- fix showruleid #24
+- CI github actions
+- address vulnerabilities
+
+## 2023.01.01 update
 
 - renamed to modsecurity_parser
 - fix for timezone with miliseconds

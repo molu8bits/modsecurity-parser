@@ -1,0 +1,83 @@
+--c82b023d-A--
+[10/Mar/2020:12:13:30 --0400] Xme8qvZyuuIZU0265B9DWwAAAAc 200.200.200.200 59134 200.200.200.200 80
+--c82b023d-B--
+GET /test HTTP/1.1
+User-Agent: client
+Host: test
+Accept: */*
+Cookie: AccessCard=; UserCard=
+
+--c82b023d-F--
+HTTP/1.1 400 Bad Request
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Length: 86
+Connection: close
+Content-Type: application/json
+
+--c82b023d-H--
+Stopwatch: 1583856810084172 20194 (- - -)
+Stopwatch2: 1583856810084172 20194; combined=315, p1=3, p2=308, p3=0, p4=0, p5=3, sr=0, sw=1, l=0, gc=0
+Producer: ModSecurity for Apache/2.9.3 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "DETECTION_ONLY"
+
+--c82b023d-Z--
+
+--d394963e-A--
+[10/Mar/2020:22:13:30 --0400] Xme8qiff04bQ7c8r9KTz@wAAAAI 200.200.200.100 59140 200.200.200.100 80
+--d394963e-B--
+GET /test HTTP/1.1
+User-Agent: client
+Host: test
+Accept: */*
+Cookie: AccessCard=; UserCard=
+
+--d394963e-F--
+HTTP/1.1 400 Bad Request
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Length: 86
+Connection: close
+Content-Type: application/json
+
+--d394963e-H--
+Stopwatch: 1583856810234093 16256 (- - -)
+Stopwatch2: 1583856810234093 16256; combined=368, p1=6, p2=359, p3=0, p4=0, p5=3, sr=0, sw=0, l=0, gc=0
+Producer: ModSecurity for Apache/2.9.3 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "DETECTION_ONLY"
+
+--d394963e-Z--
+
+--646ede1b-A--
+[11/Mar/2020:12:13:30 --0400] Xme8qqHFvi108A74u@QKRQAAAAY 200.200.200.50 59146 200.200.200.50 80
+--646ede1b-B--
+GET /test HTTP/1.1
+User-Agent: client
+Host: test
+Accept: */*
+Cookie: AccessCard=; UserCard=
+
+--646ede1b-F--
+HTTP/1.1 400 Bad Request
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Length: 86
+Connection: close
+Content-Type: application/json
+
+--646ede1b-H--
+Stopwatch: 1583856810380195 44102 (- - -)
+Stopwatch2: 1583856810380195 44102; combined=369, p1=4, p2=361, p3=0, p4=0, p5=4, sr=0, sw=0, l=0, gc=0
+Producer: ModSecurity for Apache/2.9.3 (http://www.modsecurity.org/).
+Server: Apache
+Engine-Mode: "DETECTION_ONLY"
+
+--646ede1b-Z--

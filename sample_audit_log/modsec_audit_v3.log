@@ -1,0 +1,173 @@
+---uhBr3CdI---A--
+[05/Mar/2022:06:20:00 +0100] WpzWb8PNbOUAAHtgNKoAAAAD 192.168.108.229 39654 192.168.108.229 443
+---uhBr3CdI---B--
+GET / HTTP/1.1
+User-Agent: check_http/v1.5 (nagios-plugins 1.5)
+Connection: close
+Host: www.webpage.local
+
+---uhBr3CdI---F--
+HTTP/1.1 200 OK
+Set-Cookie: MoodleSession=1s951r11jtemfgpgochdtqq117; path=/; secure
+Expires: Mon, 20 Aug 1969 09:23:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Language: pl
+Content-Script-Type: text/javascript
+Content-Style-Type: text/css
+X-UA-Compatible: IE=edge
+Cache-Control: post-check=0, pre-check=0, no-transform
+Last-Modified: Mon, 05 Mar 2022 05:32:31 GMT
+Accept-Ranges: none
+X-Frame-Options: sameorigin
+Vary: Accept-Encoding
+Content-Length: 46064
+Connection: close
+Content-Type: text/html; charset=utf-8
+
+---uhBr3CdI---E--
+<!DOCTYPE html>
+<html  dir="ltr" lang="pl" xml:lang="pl">
+<head>
+    <title>Testing Modsecurity Header</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</script>
+<script type="text/javascript" src="https://example.domain/lib/javascript.php/ping-pong/lib/requirejs/require.min.js"></script>
+<script type="text/javascript">
+</script>
+</script>
+
+</div>
+</body>
+</html>
+
+---uhBr3CdI---H--
+Message: Warning. Operator EQ matched 0 at REQUEST_HEADERS. [file "/usr/share/modsecurity-crs/activated_rules/modsecurity_crs_21_protocol_anomalies.conf"] [line "47"] [id "960015"] [rev "1"] [msg "Request Missing an Accept Header"] [severity "NOTICE"] [ver "OWASP_CRS/2.2.8"] [maturity "9"] [accuracy "9"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/MISSING_HEADER_ACCEPT"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"]
+Message: Warning. Operator LT matched 5 at TX:inbound_anomaly_score. [file "/usr/share/modsecurity-crs/activated_rules/modsecurity_crs_60_correlation.conf"] [line "33"] [id "981203"] [msg "Inbound Anomaly Score (Total Inbound Score: 2, SQLi=0, XSS=0): Request Missing an Accept Header"]
+Apache-Handler: application/x-httpd-php
+Stopwatch: 1520227951454601 110310 (- - -)
+Stopwatch2: 1520227951454601 110310; combined=20022, p1=268, p2=374, p3=3, p4=19286, p5=90, sr=65, sw=1, l=0, gc=0
+Response-Body-Transformed: Dechunked
+Producer: ModSecurity for Apache/2.7.7 (http://www.modsecurity.org/); OWASP_CRS/2.2.8.
+Server: Apache/2.4.7 (Ubuntu)
+Engine-Mode: "DETECTION_ONLY"
+
+---uhBr3CdI---Z--
+
+---Zb2RuGZ3---A--
+[06/Mar/2022:06:35:05 +0100] WpzXj8PNbOUAAHthCdYAAAAA 10.0.5.20 56104 192.168.108.229 443
+---Zb2RuGZ3---B--
+GET / HTTP/1.0
+User-Agent: check_http/v2.0.3 (nagios-plugins 2.0.3)
+Connection: close
+Accept: */*
+
+---Zb2RuGZ3---F--
+HTTP/1.1 200 OK
+Set-Cookie: MoodleSession=ikjes25bh71f3s83a7kfcsdpl2; path=/; secure
+Expires: Mon, 20 Aug 1969 09:23:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Language: pl
+Content-Script-Type: text/javascript
+Content-Style-Type: text/css
+X-UA-Compatible: IE=edge
+Cache-Control: post-check=0, pre-check=0, no-transform
+Last-Modified: Mon, 05 Mar 2022 05:37:19 GMT
+Accept-Ranges: none
+X-Frame-Options: sameorigin
+Vary: Accept-Encoding
+Connection: close
+Content-Type: text/html; charset=utf-8
+
+---Zb2RuGZ3---H--
+Message: Access allowed (phase 1). Pattern match "^10\\.0\\.5\\.20$" at REMOTE_ADDR. [file "/usr/share/modsecurity-crs/activated_rules/modsecurity_crs_10_whitelist.conf"] [line "2"] [id "999946"]
+Apache-Handler: application/x-httpd-php
+Stopwatch: 1520228239304032 84533 (- - -)
+Stopwatch2: 1520228239304032 84533; combined=193, p1=185, p2=0, p3=0, p4=0, p5=8, sr=67, sw=0, l=0, gc=0
+Producer: ModSecurity for Apache/2.7.7 (http://www.modsecurity.org/); OWASP_CRS/2.2.8.
+Server: Apache/2.4.7 (Ubuntu)
+
+---Zb2RuGZ3---Z--
+
+---cv15RQ5J---A--
+[07/Mar/2022:06:50:10 +0100] WpzYx8PNbOUAAHtf64cAAAAJ 192.168.108.229 39676 192.168.108.229 443
+---cv15RQ5J---B--
+GET / HTTP/1.1
+User-Agent: check_http/v1.5 (nagios-plugins 1.5)
+Connection: close
+Host: www.webpage.local
+
+---cv15RQ5J---F--
+HTTP/1.1 200 OK
+Set-Cookie: MoodleSession=i1lq22ovkpgmp6jorqmfa7vf82; path=/; secure
+Expires: Mon, 20 Aug 1969 09:23:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Language: pl
+Content-Script-Type: text/javascript
+Content-Style-Type: text/css
+X-UA-Compatible: IE=edge
+Cache-Control: post-check=0, pre-check=0, no-transform
+Last-Modified: Mon, 05 Mar 2022 05:42:31 GMT
+Accept-Ranges: none
+X-Frame-Options: sameorigin
+Vary: Accept-Encoding
+Content-Length: 46064
+Connection: close
+Content-Type: text/html; charset=utf-8
+
+---cv15RQ5J---E--
+
+</div>
+</body>
+</html>
+
+---cv15RQ5J---H--
+Message: Warning. Operator EQ matched 0 at REQUEST_HEADERS. [file "/usr/share/modsecurity-crs/activated_rules/modsecurity_crs_21_protocol_anomalies.conf"] [line "47"] [id "960015"] [rev "1"] [msg "Request Missing an Accept Header"] [severity "NOTICE"] [ver "OWASP_CRS/2.2.8"] [maturity "9"] [accuracy "9"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/MISSING_HEADER_ACCEPT"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"]
+Message: Warning. Operator LT matched 5 at TX:inbound_anomaly_score. [file "/usr/share/modsecurity-crs/activated_rules/modsecurity_crs_60_correlation.conf"] [line "33"] [id "981203"] [msg "Inbound Anomaly Score (Total Inbound Score: 2, SQLi=0, XSS=0): Request Missing an Accept Header"]
+Apache-Handler: application/x-httpd-php
+Stopwatch: 1520228551557594 116673 (- - -)
+Stopwatch2: 1520228551557594 116673; combined=19968, p1=298, p2=381, p3=3, p4=19197, p5=89, sr=79, sw=0, l=0, gc=0
+Response-Body-Transformed: Dechunked
+Producer: ModSecurity for Apache/2.7.7 (http://www.modsecurity.org/); OWASP_CRS/2.2.8.
+Server: Apache/2.4.7 (Ubuntu)
+Engine-Mode: "DETECTION_ONLY"
+
+---cv15RQ5J---Z--
+
+---6EA9QlPr---A--
+[08/Mar/2022:07:10:04 +0100] WpzZ58PNbOUAAHxtrigAAAAC 10.0.5.20 57092 192.168.108.229 443
+---6EA9QlPr---B--
+GET / HTTP/1.0
+User-Agent: check_http/v2.0.3 (nagios-plugins 2.0.3)
+Connection: close
+Accept: */*
+
+---6EA9QlPr---F--
+HTTP/1.1 200 OK
+Set-Cookie: MoodleSession=tgj4m2p1q35qsg981gjnclk5i4; path=/; secure
+Expires: Mon, 20 Aug 1969 09:23:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Language: pl
+Content-Script-Type: text/javascript
+Content-Style-Type: text/css
+X-UA-Compatible: IE=edge
+Cache-Control: post-check=0, pre-check=0, no-transform
+Last-Modified: Mon, 05 Mar 2022 05:47:19 GMT
+Accept-Ranges: none
+X-Frame-Options: sameorigin
+Vary: Accept-Encoding
+Connection: close
+Content-Type: text/html; charset=utf-8
+
+---6EA9QlPr---H--
+Message: Access allowed (phase 1). Pattern match "^10\\.0\\.5\\.20$" at REMOTE_ADDR. [file "/usr/share/modsecurity-crs/activated_rules/modsecurity_crs_10_whitelist.conf"] [line "2"] [id "999946"]
+Apache-Handler: application/x-httpd-php
+Stopwatch: 1520228839380328 86798 (- - -)
+Stopwatch2: 1520228839380328 86798; combined=213, p1=206, p2=0, p3=0, p4=0, p5=7, sr=69, sw=0, l=0, gc=0
+Producer: ModSecurity for Apache/2.7.7 (http://www.modsecurity.org/); OWASP_CRS/2.2.8.
+Server: Apache/2.4.7 (Ubuntu)
+
+---6EA9QlPr---Z--

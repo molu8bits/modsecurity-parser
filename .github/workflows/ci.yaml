@@ -1,0 +1,48 @@
+name: CI
+on:
+  pull_request:
+    branches: [develop, master]
+  push:
+    branches: [develop, master]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip3 install -r requirements-dev.txt
+          pip3 install -r requirements.txt
+
+      - name: Linting
+        run: |
+          make lint
+
+      - name: Unit Test
+        run: |
+          make test
+
+      - name: E2E Test
+        run: |
+          make test-e2e
+
+      - name: SonarCloud Scan
+        # if: ${{ github.event_name == 'pull_request' }}
+        # if: ${{ github.event_name == 'push' }}
+        # if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: SonarSource/sonarcloud-github-action@v1.9.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
