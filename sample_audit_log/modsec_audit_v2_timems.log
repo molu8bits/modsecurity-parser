@@ -1,0 +1,152 @@
+--622ca252-A--
+[13/Aug/2022:00:06:11.341644 +0000] WugN3pjbflCiqw4yEJ3nggAAAAk 172.16.0.2 22387 192.168.0.1 80
+--622ca252-B--
+GET /phpmyadmin/index.php HTTP/1.1
+User-Agent: Mozilla/5.0
+Host: 192.168.0.1
+Connection: Keep-Alive
+Cache-Control: no-cache
+
+--622ca252-F--
+HTTP/1.1 403 Forbidden
+Content-Length: 222
+Keep-Alive: timeout=5, max=99
+Connection: Keep-Alive
+Content-Type: text/html; charset=iso-8859-1
+
+--622ca252-E--
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>403 Forbidden</title>
+</head><body>
+<h1>Forbidden</h1>
+<p>You don't have permission to access /phpmyadmin/index.php
+on this server.</p>
+</body></html>
+
+--622ca252-H--
+Message: Access denied with code 403 (phase 1). Pattern match "/phpmyadmin" at REQUEST_FILENAME. [file "/etc/httpd/conf.d/mod_security.conf"] [line "94"] [id "10000"] [msg "Blocking access to /phpmyadmin/index.php."] [tag "Blacklist Rules"]
+Apache-Error: [file "apache2_util.c"] [line 271] [level 3] [client 172.16.0.2] ModSecurity: Access denied with code 403 (phase 1). Pattern match "/phpmyadmin" at REQUEST_FILENAME. [file "/etc/httpd/conf.d/mod_security.conf"] [line "94"] [id "10000"] [msg "Blocking access to /phpmyadmin/index.php."] [tag "Blacklist Rules"] [hostname "192.168.0.1"] [uri "/phpmyadmin/index.php"] [unique_id "WugN3pjbflCiqw4yEJ3nggAAAAk"]
+Action: Intercepted (phase 1)
+Stopwatch: 1525157342927546 578 (- - -)
+Stopwatch2: 1525157342927546 578; combined=125, p1=53, p2=0, p3=0, p4=0, p5=72, sr=0, sw=0, l=0, gc=0
+Response-Body-Transformed: Dechunked
+Producer: ModSecurity for Apache/2.9.2 (http://www.modsecurity.org/); OWASP_CRS/3.0.2.
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+Engine-Mode: "ENABLED"
+
+--622ca252-Z--
+
+--68a39c63-A--
+[13/Aug/2022:02:06:11.341644 +0000] WvGgdU9AURJlp7Ta7HNRzAAAAAE 10.5.6.7 37346 192.168.0.1 443
+--68a39c63-B--
+GET /favicon.ico HTTP/1.1
+Host: 192.168.0.1
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+Accept: */*
+User-Agent: python-requests/2.13.0
+
+--68a39c63-F--
+HTTP/1.1 404 Not Found
+Content-Length: 209
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=iso-8859-1
+
+--68a39c63-E--
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL /favicon.ico was not found on this server.</p>
+</body></html>
+
+--68a39c63-H--
+Message: Warning. Matched phrase "python-requests" at REQUEST_HEADERS:User-Agent. [file "/etc/httpd/conf.d/crs/rules/REQUEST-913-SCANNER-DETECTION.conf"] [line "164"] [id "913101"] [rev "1"] [msg "Found User-Agent associated with scripting/generic HTTP client"] [data "Matched Data: python-requests found within REQUEST_HEADERS:User-Agent: python-requests/2.13.0"] [severity "CRITICAL"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "7"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-reputation-scripting"] [tag "OWASP_CRS/AUTOMATION/SCRIPTING"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"] [tag "paranoia-level/2"]
+Message: Warning. Pattern match "^[\\d.:]+$" at REQUEST_HEADERS:Host. [file "/etc/httpd/conf.d/crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"] [line "810"] [id "920350"] [rev "2"] [msg "Host header is a numeric IP address"] [data "192.168.0.1"] [severity "WARNING"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "9"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-protocol"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"]
+Apache-Error: [file "apache2_util.c"] [line 271] [level 3] [client 10.5.6.7] ModSecurity: Warning. Matched phrase "python-requests" at REQUEST_HEADERS:User-Agent. [file "/etc/httpd/conf.d/crs/rules/REQUEST-913-SCANNER-DETECTION.conf"] [line "164"] [id "913101"] [rev "1"] [msg "Found User-Agent associated with scripting/generic HTTP client"] [data "Matched Data: python-requests found within REQUEST_HEADERS:User-Agent: python-requests/2.13.0"] [severity "CRITICAL"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "7"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-reputation-scripting"] [tag "OWASP_CRS/AUTOMATION/SCRIPTING"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"] [tag "paranoia-level/2"] [hostname "192.168.0.1"] [uri "/favicon.ico"] [unique_id "WvGgdU9AURJlp7Ta7HNRzAAAAAE"]
+Apache-Error: [file "apache2_util.c"] [line 271] [level 3] [client 10.5.6.7] ModSecurity: Warning. Pattern match "^[\\\\\\\\d.:]+$" at REQUEST_HEADERS:Host. [file "/etc/httpd/conf.d/crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"] [line "810"] [id "920350"] [rev "2"] [msg "Host header is a numeric IP address"] [data "192.168.0.1"] [severity "WARNING"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "9"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-protocol"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"] [hostname "192.168.0.1"] [uri "/favicon.ico"] [unique_id "WvGgdU9AURJlp7Ta7HNRzAAAAAE"]
+Stopwatch: 1525784693307805 2777 (- - -)
+Stopwatch2: 1525784693307805 2777; combined=2021, p1=694, p2=748, p3=58, p4=209, p5=224, sr=328, sw=88, l=0, gc=0
+Response-Body-Transformed: Dechunked
+Producer: ModSecurity for Apache/2.9.2 (http://www.modsecurity.org/); OWASP_CRS/3.0.2.
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+Engine-Mode: "ENABLED"
+
+--68a39c63-Z--
+
+
+--c2578d7b-A--
+[13/Aug/2022:03:06:11.341644 +0000] WvTyJHKtCFt-nNhJ4VGG9QAAAAg 172.16.0.2 45736 192.168.0.1 443
+--c2578d7b-B--
+HEAD /index.php HTTP/1.1
+Host: 192.168.0.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+User-Agent: python-requests/2.18.4
+Connection: keep-alive
+
+--c2578d7b-F--
+HTTP/1.1 404 Not Found
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=iso-8859-1
+
+--c2578d7b-E--
+
+--c2578d7b-H--
+Message: Warning. Matched phrase "python-requests" at REQUEST_HEADERS:User-Agent. [file "/etc/httpd/conf.d/crs/rules/REQUEST-913-SCANNER-DETECTION.conf"] [line "164"] [id "913101"] [rev "1"] [msg "Found User-Agent associated with scripting/generic HTTP client"] [data "Matched Data: python-requests found within REQUEST_HEADERS:User-Agent: python-requests/2.18.4"] [severity "CRITICAL"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "7"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-reputation-scripting"] [tag "OWASP_CRS/AUTOMATION/SCRIPTING"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"] [tag "paranoia-level/2"]
+Message: Warning. Pattern match "^[\\d.:]+$" at REQUEST_HEADERS:Host. [file "/etc/httpd/conf.d/crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"] [line "810"] [id "920350"] [rev "2"] [msg "Host header is a numeric IP address"] [data "192.168.0.1"] [severity "WARNING"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "9"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-protocol"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"]
+Apache-Error: [file "apache2_util.c"] [line 271] [level 3] [client 172.16.0.2] ModSecurity: Warning. Matched phrase "python-requests" at REQUEST_HEADERS:User-Agent. [file "/etc/httpd/conf.d/crs/rules/REQUEST-913-SCANNER-DETECTION.conf"] [line "164"] [id "913101"] [rev "1"] [msg "Found User-Agent associated with scripting/generic HTTP client"] [data "Matched Data: python-requests found within REQUEST_HEADERS:User-Agent: python-requests/2.18.4"] [severity "CRITICAL"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "7"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-reputation-scripting"] [tag "OWASP_CRS/AUTOMATION/SCRIPTING"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"] [tag "paranoia-level/2"] [hostname "192.168.0.1"] [uri "/index.php"] [unique_id "WvTyJHKtCFt-nNhJ4VGG9QAAAAg"]
+Apache-Error: [file "apache2_util.c"] [line 271] [level 3] [client 172.16.0.2] ModSecurity: Warning. Pattern match "^[\\\\\\\\d.:]+$" at REQUEST_HEADERS:Host. [file "/etc/httpd/conf.d/crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"] [line "810"] [id "920350"] [rev "2"] [msg "Host header is a numeric IP address"] [data "192.168.0.1"] [severity "WARNING"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "9"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-protocol"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"] [hostname "192.168.0.1"] [uri "/index.php"] [unique_id "WvTyJHKtCFt-nNhJ4VGG9QAAAAg"]
+Stopwatch: 1526002212715379 3565 (- - -)
+Stopwatch2: 1526002212715379 3565; combined=2244, p1=885, p2=860, p3=66, p4=119, p5=214, sr=539, sw=100, l=0, gc=0
+Response-Body-Transformed: Dechunked
+Producer: ModSecurity for Apache/2.9.2 (http://www.modsecurity.org/); OWASP_CRS/3.0.2.
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+Engine-Mode: "ENABLED"
+
+--c2578d7b-Z--
+
+--7b0b0a73-A--
+[13/Aug/2022:05:06:11.341644 +0000] Wu0TYfl141Zko07xKZQLRwAAAAI 10.9.8.7 54171 192.168.0.1 443
+--7b0b0a73-B--
+GET /verifylogin.do HTTP/1.1
+Connection: Keep-Alive
+Content-Type: %{(#test='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(#ros.println(55*55+1)).(#ros.flush())}
+Accept: */*
+Accept-Language: zh-cn
+Referer: https://192.168.0.1:443/verifylogin.do
+User-Agent: Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1)
+Host: 192.168.0.1
+
+--7b0b0a73-F--
+HTTP/1.1 404 Not Found
+Content-Length: 212
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=iso-8859-1
+
+--7b0b0a73-E--
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL /verifylogin.do was not found on this server.</p>
+</body></html>
+
+--7b0b0a73-H--
+Message: Warning. Pattern match "^[\\d.:]+$" at REQUEST_HEADERS:Host. [file "/etc/httpd/conf.d/crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"] [line "810"] [id "920350"] [rev "2"] [msg "Host header is a numeric IP address"] [data "192.168.0.1"] [severity "WARNING"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "9"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-protocol"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"]
+Apache-Error: [file "apache2_util.c"] [line 271] [level 3] [client 10.9.8.7] ModSecurity: Warning. Pattern match "^[\\\\\\\\d.:]+$" at REQUEST_HEADERS:Host. [file "/etc/httpd/conf.d/crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"] [line "810"] [id "920350"] [rev "2"] [msg "Host header is a numeric IP address"] [data "192.168.0.1"] [severity "WARNING"] [ver "OWASP_CRS/3.0.0"] [maturity "9"] [accuracy "9"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-protocol"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"] [hostname "192.168.0.1"] [uri "/verifylogin.do"] [unique_id "Wu0TYfl141Zko07xKZQLRwAAAAI"]
+Stopwatch: 1525486433569262 3185 (- - -)
+Stopwatch2: 1525486433569262 3185; combined=1985, p1=810, p2=812, p3=56, p4=191, p5=115, sr=399, sw=1, l=0, gc=0
+Response-Body-Transformed: Dechunked
+Producer: ModSecurity for Apache/2.9.2 (http://www.modsecurity.org/); OWASP_CRS/3.0.2.
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips
+Engine-Mode: "ENABLED"
+
+
+--7b0b0a73-Z--

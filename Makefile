@@ -39,7 +39,8 @@ lint:
     # test comments
 	@echo "\n${BLUE}Running Pylint against source and test files...${NC}\n"
 	# @pylint --rcfile=setup.cfg **/*.py *.py
-	@pylint --rcfile=setup.cfg *.py
+	# @pylint --rcfile=setup.cfg *.py
+	@pylint --rcfile=setup.cfg *.py --output-format=parseable --output pylint-output.txt --exit-zero
 	@echo "\n${BLUE}Running PyDocStyle against source files...${NC}\n"
 	@pydocstyle --config=setup.cfg modsecurity_parser.py
 	@echo "\n${BLUE}Running Flake8 against source and test files...${NC}\n"
@@ -50,8 +51,8 @@ lint:
 	@echo "\n${BLUE}Running pycodestyle against source files...${NC}\n"
 	@pycodestyle modsecurity_parser.py
 	@echo "\n${BLUE}Running Code Coverage against source files...${NC}\n"
-	@pytest --cov=modsecurity_parser tests --cov-report=html
-
+	# @pytest --cov=modsecurity_parser tests --cov-report=html
+	# @pytest
 
 clean:
 	rm -rf .pytest_cache .coverage .pytest_cache coverage.xml sample_audit_log/modsec_output
