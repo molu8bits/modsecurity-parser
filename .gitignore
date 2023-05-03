@@ -70,7 +70,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
+#*.log
 local_settings.py
 db.sqlite3
 
@@ -136,4 +136,4 @@ venv.bak/
 ########### molu ############
 ################################
 .molu
-sample_audit_log/modsec_output
+sample_audit_log/modsec_output/**

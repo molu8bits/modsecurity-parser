@@ -1,8 +1,8 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL maintainer "molu8bits@gmail.com"
 LABEL description "modsecurity parse and charts via Docker"
-LABEL version "2023.03 v0.4"
+LABEL version "2023.05 v0.5"
 
 ENV DEBIAN_FRONTEND=noninteractive
 

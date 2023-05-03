@@ -10,3 +10,4 @@ bandit
 pytest
 pytest-cov
 codecov
+pydocstyle
